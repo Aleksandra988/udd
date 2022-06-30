@@ -118,9 +118,10 @@ function searchLuceneTermQuery() {
     var educationValue = $('#luceneTermQuery input[name=educationValue]').val();
     var contentField = $('#luceneTermQuery input[name=contentField]').val();
     var contentValue = $('#luceneTermQuery input[name=contentValue]').val();
+    var operation = $('select[name=operation]').val();
 
     var data = JSON.stringify({"firstnameField":firstnameField, "firstnameValue":firstnameValue, "lastnameField":lastnameField, "lastnameValue":lastnameValue,
-    "educationField":educationField, "educationValue":educationValue, "contentField":contentField, "contentValue":contentValue, "operation": "AND"});
+    "educationField":educationField, "educationValue":educationValue, "contentField":contentField, "contentValue":contentValue, "operation": operation});
    
     $("#btnSubmitLuceneTermQuery").prop("disabled", true);
 
