@@ -11,7 +11,7 @@ table, th, td {
   /*border: 1px solid black*/
 }
 
-table, th, td:nth-child(3) {
+table, th, td:nth-child(4) {
 text-align: left;
 }
 
@@ -78,6 +78,29 @@ h1 {
     padding: 5px 0 5px 10px;
     text-shadow: 2px 2px 3px #222222;
 }
+
+h3{
+    Font family: "Microsoft YaHei", "Tahoma", "boldface", Arial;
+    font-size: 30px;
+    text-align:center;
+}
+
+/*.statisticTitile{
+    background: #2B6600;
+    border-radius: 6px 6px 6px 6px;
+    /*box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);*/
+    color: #FFFFFF;
+    Font family: "Microsoft YaHei", "Tahoma", "boldface", Arial;
+    font-size: 25px;
+    font-weight: bold;
+    height: 30px;
+    width: 100px;
+    line-height: 28px;
+    margin: 12px 40px 30px !important;
+    /*padding: 5px 0 5px 10px;*/
+    /*text-shadow: 2px 2px 3px #222222;*/
+
+    }*/
 
 /*input[type="file"] {
     display: none;

@@ -84,9 +84,7 @@ public class IndexerController {
 	    @PostMapping("/index/add")
 	    public ResponseEntity<String> multiUploadFileModel(@ModelAttribute UploadModelApplication model) {
 
-
 	        try {
-
 	        	indexUploadedFile(model);
 
 	        } catch (IOException e) {
@@ -94,7 +92,6 @@ public class IndexerController {
 	        }
 
 	        return new ResponseEntity<String>("Successfully uploaded!", HttpStatus.OK);
-
 	    }
 		    
 		    
@@ -115,35 +112,23 @@ public class IndexerController {
 	    	for (MultipartFile file : model.getFiles()) {
 
 	            if (file.isEmpty()) {
-	                continue; //next please
+	                continue;
 	            }
 	            String fileName = saveUploadedFile(file);
 	            if(fileName != null){
-//	            	IndexUnit indexUnit = indexer.getHandler(fileName).getIndexUnit(new File(fileName));
-//	            	indexUnit.setTitle(model.getTitle());
-//	            	indexUnit.setKeywords(model.getKeywords());
-	            	//indexer.add(indexUnit);
 					Application application = indexer.getHandler(fileName).getApplication(new File(fileName));
 					application.setFirstname(model.getFirstname());
 					application.setLastname(model.getLastname());
 					application.setEducation(model.getEducation());
-//					application.setContent(getContent(file));
+					application.setCity(model.getCity());
+					application.setTimestamp(new Date());
 					application.setLocation(getLocation(model.getCity(), model.getCountry()));
 					indexApplicationService.save(application);
 	            }
 	    	}
 	    }
 
-	public String getContent(MultipartFile file) throws IOException {
-
-			byte[] bytes = file.getBytes();
-			String completeData = new String(bytes);
-
-			return completeData;
-	}
-
-	public GeoPoint getLocation(String city, String country){
-		//logger.info("Strated getting location ");
+	public GeoPoint getLocation(String city, String country){;
 		JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("925c9f60dd9b42088219fe26476d8746");
 		String query = city + ", " + country;
 		JOpenCageForwardRequest request = new JOpenCageForwardRequest(query);
@@ -154,8 +139,6 @@ public class IndexerController {
 
 		System.out.println("LOCATION");
 		System.out.println(location);
-
-		//logger.info("Finished getting location");
 		return location;
 	}
 
