@@ -22,67 +22,22 @@ public class SearchController {
 
 		@Autowired
 		private ResultRetriever resultRetriever;
-	
-		@PostMapping(value="/search/term", consumes="application/json")
-		public ResponseEntity<List<ResultDataApplication>> searchTermQuery(@RequestBody SimpleQuery simpleQuery) throws Exception {
-			org.elasticsearch.index.query.QueryBuilder query= QueryBuilder.buildQuery(SearchType.regular, simpleQuery.getField(), simpleQuery.getValue());
-			List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-			rh.add(new RequiredHighlight(simpleQuery.getField(), simpleQuery.getValue()));
-			List<ResultDataApplication> results = resultRetriever.getResultsApplication(query, rh);
-			//List<ResultDataApplication> results = resultRetriever.getResultsApplication(simpleQuery);
-			return new ResponseEntity<List<ResultDataApplication>>(results, HttpStatus.OK);
-		}
-		
-		@PostMapping(value="/search/fuzzy", consumes="application/json")
-		public ResponseEntity<List<ResultData>> searchFuzzy(@RequestBody SimpleQuery simpleQuery) throws Exception {
-			org.elasticsearch.index.query.QueryBuilder query= QueryBuilder.buildQuery(SearchType.fuzzy, simpleQuery.getField(), simpleQuery.getValue());
-			List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-			rh.add(new RequiredHighlight(simpleQuery.getField(), simpleQuery.getValue()));
-			List<ResultData> results = resultRetriever.getResults(query, rh);			
-			return new ResponseEntity<List<ResultData>>(results, HttpStatus.OK);
-		}
-		
-		@PostMapping(value="/search/prefix", consumes="application/json")
-		public ResponseEntity<List<ResultData>> searchPrefix(@RequestBody SimpleQuery simpleQuery) throws Exception {
-			org.elasticsearch.index.query.QueryBuilder query= QueryBuilder.buildQuery(SearchType.prefix, simpleQuery.getField(), simpleQuery.getValue());
-			List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-			rh.add(new RequiredHighlight(simpleQuery.getField(), simpleQuery.getValue()));
-			List<ResultData> results = resultRetriever.getResults(query, rh);			
-			return new ResponseEntity<List<ResultData>>(results, HttpStatus.OK);
-		}
-		
-		@PostMapping(value="/search/range", consumes="application/json")
-		public ResponseEntity<List<ResultData>> searchRange(@RequestBody SimpleQuery simpleQuery) throws Exception {
-			org.elasticsearch.index.query.QueryBuilder query= QueryBuilder.buildQuery(SearchType.range, simpleQuery.getField(), simpleQuery.getValue());
-			List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-			rh.add(new RequiredHighlight(simpleQuery.getField(), simpleQuery.getValue()));
-			List<ResultData> results = resultRetriever.getResults(query, rh);			
-			return new ResponseEntity<List<ResultData>>(results, HttpStatus.OK);
-		}
-		
-		@PostMapping(value="/search/phrase", consumes="application/json")
-		public ResponseEntity<List<ResultData>> searchPhrase(@RequestBody SimpleQuery simpleQuery) throws Exception {
-			org.elasticsearch.index.query.QueryBuilder query= QueryBuilder.buildQuery(SearchType.phrase, simpleQuery.getField(), simpleQuery.getValue());
-			List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-			rh.add(new RequiredHighlight(simpleQuery.getField(), simpleQuery.getValue()));
-			List<ResultData> results = resultRetriever.getResults(query, rh);			
-			return new ResponseEntity<List<ResultData>>(results, HttpStatus.OK);
-		}
 		
 		@PostMapping(value="/search/boolean", consumes="application/json")
 		public ResponseEntity<List<ResultDataApplication>> searchBoolean(@RequestBody AdvancedQueryApplication advancedQuery) throws Exception {
 			if(isFieldsEmpty(advancedQuery))
 				return new ResponseEntity<List<ResultDataApplication>>((List<ResultDataApplication>) null, HttpStatus.OK);
-			if(isQuerySimple(advancedQuery)){
-				org.elasticsearch.index.query.QueryBuilder query= QueryBuilder.buildQuery(SearchType.regular, choseField(advancedQuery), choseValue(advancedQuery));
+			SimpleQuery simpleQuery = isQuerySimple(advancedQuery);
+			if(simpleQuery != null){
+
+				org.elasticsearch.index.query.QueryBuilder query= QueryBuilder.buildQuery(SearchType.regular, simpleQuery.getField(), simpleQuery.getValue());
 				List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-				rh.add(new RequiredHighlight(choseField(advancedQuery), choseValue(advancedQuery)));
+				rh.add(new RequiredHighlight(simpleQuery.getField(), simpleQuery.getValue()));
 				List<ResultDataApplication> results = resultRetriever.getResultsApplication(query, rh);
 				return new ResponseEntity<List<ResultDataApplication>>(results, HttpStatus.OK);
 			}else {
 
 				BoolQueryBuilder builder = buildQuery(advancedQuery);
-
 				List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
 
 				if (advancedQuery.getFirstnameField() != "" && advancedQuery.getFirstnameValue() != "")
@@ -159,89 +114,32 @@ public class SearchController {
 		return query;
 	}
 
-	private boolean isQuerySimple(AdvancedQueryApplication advancedQuery) {
+	private SimpleQuery isQuerySimple(AdvancedQueryApplication advancedQuery) {
 			if(advancedQuery.getFirstnameField() != "" && advancedQuery.getFirstnameValue() != "" && advancedQuery.getLastnameField() == "" &&
 				advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
 				advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-				return true;
+				return new SimpleQuery(advancedQuery.getFirstnameField(), advancedQuery.getFirstnameValue(), true);
 			else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() != "" &&
 					advancedQuery.getLastnameValue() != "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
 					advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-				return true;
+				return new SimpleQuery(advancedQuery.getLastnameField(), advancedQuery.getLastnameValue(), true);
 			else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() == "" &&
 					advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() != "" && advancedQuery.getEducationValue() != "" &&
 					advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-				return true;
+				return new SimpleQuery(advancedQuery.getEducationField(), advancedQuery.getEducationValue(), true);
 			else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() == "" &&
 					advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
 					advancedQuery.getContentField() != "" && advancedQuery.getContentValue() != "")
-				return true;
+				return new SimpleQuery(advancedQuery.getContentField(), advancedQuery.getContentValue(), true);
 			else
-				return false;
+				return null;
 	}
-
-	private String choseField(AdvancedQueryApplication advancedQuery){
-		if(advancedQuery.getFirstnameField() != "" && advancedQuery.getFirstnameValue() != "" && advancedQuery.getLastnameField() == "" &&
-				advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
-				advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-			return advancedQuery.getFirstnameField();
-		else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() != "" &&
-				advancedQuery.getLastnameValue() != "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
-				advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-			return advancedQuery.getLastnameField();
-		else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() == "" &&
-				advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() != "" && advancedQuery.getEducationValue() != "" &&
-				advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-			return advancedQuery.getEducationField();
-		else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() == "" &&
-				advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
-				advancedQuery.getContentField() != "" && advancedQuery.getContentValue() != "")
-			return advancedQuery.getContentField();
-		else
-			return null;
-	}
-
-	private String choseValue(AdvancedQueryApplication advancedQuery){
-		if(advancedQuery.getFirstnameField() != "" && advancedQuery.getFirstnameValue() != "" && advancedQuery.getLastnameField() == "" &&
-				advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
-				advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-			return advancedQuery.getFirstnameValue();
-		else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() != "" &&
-				advancedQuery.getLastnameValue() != "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
-				advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-			return advancedQuery.getLastnameValue();
-		else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() == "" &&
-				advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() != "" && advancedQuery.getEducationValue() != "" &&
-				advancedQuery.getContentField() == "" && advancedQuery.getContentValue() == "")
-			return advancedQuery.getEducationValue();
-		else if(advancedQuery.getFirstnameField() == "" && advancedQuery.getFirstnameValue() == "" && advancedQuery.getLastnameField() == "" &&
-				advancedQuery.getLastnameValue() == "" && advancedQuery.getEducationField() == "" && advancedQuery.getEducationValue() == "" &&
-				advancedQuery.getContentField() != "" && advancedQuery.getContentValue() != "")
-			return advancedQuery.getContentValue();
-		else
-			return null;
-	}
-
-	@PostMapping(value="/search/queryParser", consumes="application/json")
-		public ResponseEntity<List<ResultData>> search(@RequestBody SimpleQuery simpleQuery) throws Exception {
-			org.elasticsearch.index.query.QueryBuilder query=QueryBuilders.queryStringQuery(simpleQuery.getValue());			
-			List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-			List<ResultData> results = resultRetriever.getResults(query, rh);
-			return new ResponseEntity<List<ResultData>>(results, HttpStatus.OK);
-		}
 
 	@PostMapping("/geoSearch")
 	public ResponseEntity geoSearch(@RequestBody GeoSearchDTO geoSearchDTO) throws IOException {
-		//logger.info("Geo search");
 
-
-		//logger.info("Passed geo search validation");
 		List<ResultDataApplication> searchResultDTOList = resultRetriever.geoSearch(geoSearchDTO);
-
-		//logger.info("Successfully finished geo search");
 		return new ResponseEntity(searchResultDTOList, HttpStatus.OK);
-
-
 	}
 	
 		

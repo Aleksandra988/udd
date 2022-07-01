@@ -1,13 +1,16 @@
 package com.udd.lucene.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
 public class SimpleQuery {
 	
 	private String field;
 	private String value;
-	
-	public SimpleQuery() {
-		super();
-	}
+	private boolean isSimple;
+
 	public String getField() {
 		return field;
 	}
@@ -19,6 +22,12 @@ public class SimpleQuery {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public boolean getIsSimple() {
+		return isSimple;
+	}
+	public void setIsSimple(boolean isSimple) {
+		this.isSimple = isSimple;
 	}
 	
 }
