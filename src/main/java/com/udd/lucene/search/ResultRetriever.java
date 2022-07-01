@@ -105,6 +105,7 @@ public class ResultRetriever {
 
 		for (var ap : applications) {
 			var unit = ap.getContent();
+//			String highlight = createHighlight(ap);
 			String highlight = "";
 			if (ap.getHighlightFields().isEmpty()) {
 				highlight = unit.getContent().substring(0, 150) + "...";
@@ -113,11 +114,23 @@ public class ResultRetriever {
 			}
 			Path p = Paths.get(unit.getFilename());
 			String filename = p.getFileName().toString();
-			results.add(new ResultDataApplication(unit.getFirstname(), unit.getLastname(), unit.getEducation(), filename, unit.getLocation().toString(), highlight));
+			results.add(new ResultDataApplication(unit.getFirstname(), unit.getLastname(), unit.getEducation(), filename, unit.getLocation().toString(),
+					highlight));
 		}
 
 
 		return results;
+	}
+
+	private String createHighlight(SearchHit<Application> ap) {
+		var unit = ap.getContent();
+		String highlight = "";
+		if (ap.getHighlightFields().isEmpty()) {
+			highlight = unit.getContent().substring(0, 150) + "...";
+		} else {
+			highlight = "..." + ap.getHighlightFields().get("content").get(0) + "...";
+		}
+		return highlight;
 	}
 
 	private HighlightBuilder highlightBuilder(SimpleQuery query){

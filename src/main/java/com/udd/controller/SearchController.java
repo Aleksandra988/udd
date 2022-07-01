@@ -111,17 +111,10 @@ public class SearchController {
 			org.elasticsearch.index.query.QueryBuilder query3 = null;
 			org.elasticsearch.index.query.QueryBuilder query4 = null;
 
-			if (advancedQuery.getFirstnameField() != "" && advancedQuery.getFirstnameValue() != "")
-				query1 = QueryBuilder.buildQuery(SearchType.regular, advancedQuery.getFirstnameField(), advancedQuery.getFirstnameValue());
-
-			if (advancedQuery.getLastnameField() != "" && advancedQuery.getLastnameValue() != "")
-				query2 = QueryBuilder.buildQuery(SearchType.regular, advancedQuery.getLastnameField(), advancedQuery.getLastnameValue());
-
-			if (advancedQuery.getEducationField() != "" && advancedQuery.getEducationValue() != "")
-				query3 = QueryBuilder.buildQuery(SearchType.regular, advancedQuery.getEducationField(), advancedQuery.getEducationValue());
-
-			if (advancedQuery.getContentField() != "" && advancedQuery.getContentValue() != "")
-				query4 = QueryBuilder.buildQuery(SearchType.regular, advancedQuery.getContentField(), advancedQuery.getContentValue());
+			query1 = getQuery(advancedQuery.getFirstnameField(), advancedQuery.getFirstnameValue(), advancedQuery.getFirstnameIsPhrase());
+			query2 = getQuery(advancedQuery.getLastnameField(), advancedQuery.getLastnameValue(), advancedQuery.getLastnameIsPhrase());
+			query3 = getQuery(advancedQuery.getEducationField(), advancedQuery.getEducationValue(), advancedQuery.getEducationIsPhrase());
+			query4 = getQuery(advancedQuery.getContentField(), advancedQuery.getContentValue(), advancedQuery.getContentIsPhrase());
 
 			BoolQueryBuilder builder = QueryBuilders.boolQuery();
 			if (advancedQuery.getOperation().equalsIgnoreCase("AND")) {
@@ -154,6 +147,17 @@ public class SearchController {
 			}
 			return builder;
 		}
+
+	private org.elasticsearch.index.query.QueryBuilder getQuery(String field, String value, boolean isPhrase) throws ParseException {
+		org.elasticsearch.index.query.QueryBuilder query = null;
+		if (field != "" && value != "") {
+			if(isPhrase)
+				query = QueryBuilders.matchPhraseQuery(field, value);
+			else
+				query = QueryBuilder.buildQuery(SearchType.regular, field, value);
+		}
+		return query;
+	}
 
 	private boolean isQuerySimple(AdvancedQueryApplication advancedQuery) {
 			if(advancedQuery.getFirstnameField() != "" && advancedQuery.getFirstnameValue() != "" && advancedQuery.getLastnameField() == "" &&

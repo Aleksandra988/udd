@@ -5,61 +5,75 @@
 	        src="webjars/jquery/2.2.4/jquery.min.js"></script>
 	
 		<script type="text/javascript" src="js/main.js"></script>
+		<link rel="stylesheet" type = "text/css" href = "js/main.css">
 	</head>
 	<body>
-	
-		<h1>Upload a file which should be indexed</h1>
-		
-		<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-		    <input type="text" name="firstname" placeholder="firstname"/><br/><br/>
-		    <input type="text" name="lastname" placeholder="lastname"/><br/><br/>
-			<input type="text" name="education" placeholder="education"/><br/><br/>
-			<input type="text" name="city" placeholder="city"/><br/><br/>
-			<input type="text" name="country" placeholder="country"/><br/><br/>
-		    <input type="file" name="files"/><br/><br/>
-		    <input type="file" name="files"/><br/><br/>
-		    <input type="submit" value="Submit" id="btnSubmit"/>
-		</form>
-		
-		<h1>Search using Lucene query language</h1>
-		
-		<form method="POST" id="luceneQueryLanguage">
-		    <input type="text" name="value" placeholder="query"/><br/><br/>
-		    <input type="submit" value="Submit" id="btnSubmitLuceneQueryLanguage"/>
-		</form>
-		
-		<h1>Search using Lucene TermQuery</h1>
-		
-		<form method="POST" id="luceneTermQuery">
-			<input type="text" name="firstnameField" placeholder="firstnameField" /><br/><br/>
-		    <input type="text" name="firstnameValue" placeholder="firstnameValue" /><br/><br/>
-			<input type="text" name="lastnameField" placeholder="lastnameField" /><br/><br/>
-			<input type="text" name="lastnameValue" placeholder="lastnameValue" /><br/><br/>
-			<input type="text" name="educationField" placeholder="educationField" /><br/><br/>
-			<input type="text" name="educationValue" placeholder="educationValue" /><br/><br/>
-			<input type="text" name="contentField" placeholder="contentField" /><br/><br/>
-			<input type="text" name="contentValue" placeholder="contentValue" /><br/><br/>
-			<select name="operation" id="operation">
-				<option value="AND">AND</option>
-				<option value="OR">OR</option>
-				<option value="NOT">NOT</option>
-			</select><br/><br/>
-		    <input type="submit" value="Submit" id="btnSubmitLuceneTermQuery"/>
-		</form>
+	<table class="center">
+		<tr>
+			<th>
+				<h2>Upload a file</h2>
 
-		<h1>Search Geolocation</h1>
+				<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+					<input type="text" name="firstname" placeholder="firstname"/><br/><br/>
+					<input type="text" name="lastname" placeholder="lastname"/><br/><br/>
+					<input type="text" name="education" placeholder="education"/><br/><br/>
+					<input type="text" name="city" placeholder="city"/><br/><br/>
+					<input type="text" name="country" placeholder="country"/><br/><br/>
+				<input type="file" name="files"/><br/><br/>
+					<!--<label class="custom-file-upload">
+						<input type="file" name="files"/>
+						<i class="fa fa-cloud-upload"></i> Upload file
+					</label><br/><br/>-->
+					<input type="file" name="files"/><br/><br/>
+					<input class="button" type="submit" value="Submit" id="btnSubmit"/>
+				</form>
+			</th>
+			<th>
+				<h2>Basic and advanced search</h2>
 
-		<form method="POST" id="luceneGeoSearch">
-			<input type="text" name="city" placeholder="city" /><br/><br/>
-			<input type="text" name="country" placeholder="country" /><br/><br/>
-			<input type="text" name="distance" placeholder="distance" /><br/><br/>
-			<input type="submit" value="Submit" id="btnSubmitGeo"/>
-		</form>
-		
+				<form method="POST" id="luceneTermQuery">
+					<input STYLE="background-color: #D3D3D3;" type="text" name="firstnameField" placeholder="firstnameField" value="firstname" readonly/><br/><br/>
+					<input type="text" name="firstnameValue" placeholder="firstnameValue" />
+					<input type="checkbox" id="checkboxfirstname" name="checkboxfirstname">
+					<label for="checkboxfirstname">isPhrase</label><br/><br/>
+					<input STYLE="background-color: #D3D3D3;" type="text" name="lastnameField" placeholder="lastnameField" value="lastname" readonly/><br/><br/>
+					<input type="text" name="lastnameValue" placeholder="lastnameValue" />
+					<input type="checkbox" id="checkboxlastname" name="checkboxlastname">
+					<label for="checkboxlastname">isPhrase</label><br/><br/>
+					<input STYLE="background-color: #D3D3D3;" type="text" name="educationField" placeholder="educationField" value="education" readonly/><br/><br/>
+					<input type="text" name="educationValue" placeholder="educationValue" />
+					<input type="checkbox" id="checkboxeducation" name="checkboxeducation">
+					<label for="checkboxeducation">isPhrase</label><br/><br/>
+					<input STYLE="background-color: #D3D3D3;" type="text" name="contentField" placeholder="contentField" value="content" readonly/><br/><br/>
+					<input type="text" name="contentValue" placeholder="contentValue" />
+					<input type="checkbox" id="checkboxcontent" name="checkboxcontent">
+					<label for="checkboxcontent">isPhrase</label><br/><br/>
+					<select name="operation" id="operation">
+						<option value="AND">AND</option>
+						<option value="OR">OR</option>
+						<option value="NOT">NOT</option>
+					</select><br/><br/>
+					<input class="button" type="submit" value="Submit" id="btnSubmitLuceneTermQuery"/>
+				</form>
+			</th>
+			<th>
+				<h2>Geolocation search</h2>
+
+				<form method="POST" id="luceneGeoSearch">
+					<input type="text" name="city" placeholder="city" /><br/><br/>
+					<input type="text" name="country" placeholder="country" /><br/><br/>
+					<input type="text" name="distance" placeholder="distance" /><br/><br/>
+					<input class="button" type="submit" value="Submit" id="btnSubmitGeo"/>
+				</form>
+			</th>
+		</tr>
+		<tr>
+	</table>
 		<h1>Result</h1>
-		<pre>
-		    <span id="result"></span>
+		<pre class="res">
+		    <span class="res" id="result"></span>
 		</pre>
-	
+
+
 	</body>
 </html>

@@ -1,0 +1,112 @@
+body {
+    background-color: rgb(179,207,221);
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+   width:80%
+}
+table, th, td {
+  /*border: 1px solid black*/
+}
+
+table, th, td:nth-child(3) {
+text-align: left;
+}
+
+/*.aa{
+background-color: #D3D3D3;
+}*/
+
+.button {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 9px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+input[type=text], select {
+  width: 65%;
+  padding: 7px 7px;
+ /* margin: 3px 0;*/
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+h2 {
+    background: #2B6695;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);
+    color: #FFFFFF;
+    Font family: "Microsoft YaHei", "Tahoma", "boldface", Arial;
+    font-size: 15px;
+    font-weight: bold;
+    height: 24px;
+    width: 200px;
+    line-height: 23px;
+    margin: 12px 10px 30px !important;
+    padding: 5px 0 5px 10px;
+    text-shadow: 2px 2px 3px #222222;
+}
+
+h1 {
+    background: #2B6600;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);
+    color: #FFFFFF;
+    Font family: "Microsoft YaHei", "Tahoma", "boldface", Arial;
+    font-size: 25px;
+    font-weight: bold;
+    height: 30px;
+    width: 100px;
+    line-height: 28px;
+    margin: 12px 40px 30px !important;
+    padding: 5px 0 5px 10px;
+    text-shadow: 2px 2px 3px #222222;
+}
+
+/*input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    background-color: lightgray;
+    border: 2px solid black;
+    display: inline-block;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}*/
+
+.custom-file-upload:hover{
+    background-color: grey;
+}
+
+.res {
+    /*background: #2B6695;
+    border-radius: 6px 6px 6px 6px;/*
+   /* box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);*/
+    /*color: #FFFFFF;*/
+    Font family: "Microsoft YaHei", "Tahoma", "boldface", Arial;
+    font-size: 15px;
+    /*font-weight: bold;
+    height: 24px;
+    width: 200px;*/
+    line-height: 23px;
+    margin: 40px 80px 30px !important;
+    /*padding: 5px 0 5px 10px;*/
+   /* text-shadow: 2px 2px 3px #222222;*/
+}

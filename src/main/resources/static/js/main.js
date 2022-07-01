@@ -9,15 +9,6 @@ $(document).ready(function () {
 
     });
     
-    $("#btnSubmitLuceneQueryLanguage").click(function (event) {
-
-        //stop submit the form, we will post it manually.
-        event.preventDefault();
-
-        searchLuceneQueryLanguage();
-
-    });
-    
     $("#btnSubmitLuceneTermQuery").click(function (event) {
 
         //stop submit the form, we will post it manually.
@@ -74,40 +65,6 @@ function uploadData() {
 
 }
 
-function searchLuceneQueryLanguage() {
-
-    var value = $('#luceneQueryLanguage input[name=value]').val();
-    var data = JSON.stringify({"value":value});
-    $("#btnSubmitLuceneQueryLanguage").prop("disabled", true);
-
-    $.ajax({
-        type: "POST",
-        url: "/search/queryParser",
-        data: data,
-        contentType: 'application/json',
-        success: function (data) {
-        	$('#result').empty();
-            for(index = 0; index < data.length; index++){
-                var result = data[index]
-                $.each(result, function(key, value) {
-                  $('#result').append('<li>' + key + ': ' + value + '</li>');
-                });
-            }
-            console.log("SUCCESS : ", data);
-            $("#btnSubmitLuceneQueryLanguage").prop("disabled", false);
-
-        },
-        error: function (e) {
-        	$('#result').empty();
-            $("#result").text(e.responseText);
-            console.log("ERROR : ", e);
-            $("#btnSubmitLuceneQueryLanguage").prop("disabled", false);
-
-        }
-    });
-
-}
-
 function searchLuceneTermQuery() {
 
     var firstnameField = $('#luceneTermQuery input[name=firstnameField]').val();
@@ -119,9 +76,14 @@ function searchLuceneTermQuery() {
     var contentField = $('#luceneTermQuery input[name=contentField]').val();
     var contentValue = $('#luceneTermQuery input[name=contentValue]').val();
     var operation = $('select[name=operation]').val();
+    var firstnameIsPhrase = $("#checkboxfirstname").is(':checked');
+    var lastnameIsPhrase = $("#checkboxlastname").is(':checked');
+    var educationIsPhrase = $("#checkboxeducation").is(':checked');
+    var contentIsPhrase = $("#checkboxcontent").is(':checked')
 
     var data = JSON.stringify({"firstnameField":firstnameField, "firstnameValue":firstnameValue, "lastnameField":lastnameField, "lastnameValue":lastnameValue,
-    "educationField":educationField, "educationValue":educationValue, "contentField":contentField, "contentValue":contentValue, "operation": operation});
+    "educationField":educationField, "educationValue":educationValue, "contentField":contentField, "contentValue":contentValue, "operation": operation,
+    "firstnameIsPhrase":firstnameIsPhrase, "lastnameIsPhrase": lastnameIsPhrase, "educationIsPhrase":educationIsPhrase, "contentIsPhrase":contentIsPhrase});
    
     $("#btnSubmitLuceneTermQuery").prop("disabled", true);
 
