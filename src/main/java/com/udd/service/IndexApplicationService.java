@@ -2,9 +2,7 @@ package com.udd.service;
 
 import com.udd.lucene.indexing.handlers.*;
 import com.udd.lucene.model.Application;
-import com.udd.lucene.model.IndexUnit;
 import com.udd.repository.AplicationRepository;
-import com.udd.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

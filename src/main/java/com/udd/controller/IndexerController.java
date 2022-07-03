@@ -15,17 +15,10 @@ import com.byteowls.jopencage.model.JOpenCageForwardRequest;
 import com.byteowls.jopencage.model.JOpenCageLatLng;
 import com.byteowls.jopencage.model.JOpenCageResponse;
 import com.udd.lucene.model.Application;
-import com.udd.lucene.model.IndexUnit;
 import com.udd.lucene.model.UploadModelApplication;
 import com.udd.service.IndexApplicationService;
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.io.RandomAccessFile;
-import org.apache.pdfbox.pdfparser.PDFParser;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.udd.lucene.indexing.Indexer;
-import com.udd.lucene.model.UploadModel;
-import com.udd.service.IndexService;
 
 @RestController
 public class IndexerController {
@@ -51,22 +42,22 @@ public class IndexerController {
 		
 		@Autowired
 		private Indexer indexer;
-	@Autowired
-	private IndexService indexService;
+//	@Autowired
+//	private IndexService indexService;
 
 	@Autowired
 	private IndexApplicationService indexApplicationService;
-		
-		@GetMapping("/reindex")
-		public ResponseEntity<String> index() throws IOException {
-			File dataDir = getResourceFilePath(DATA_DIR_PATH);
-			long start = new Date().getTime();
-			int numIndexed = indexService.index(dataDir);
-			long end = new Date().getTime();
-			String text = "Indexing " + numIndexed + " files took "
-					+ (end - start) + " milliseconds";
-			return new ResponseEntity<String>(text, HttpStatus.OK);
-		}
+
+//		@GetMapping("/reindex")
+//		public ResponseEntity<String> index() throws IOException {
+//			File dataDir = getResourceFilePath(DATA_DIR_PATH);
+//			long start = new Date().getTime();
+//			int numIndexed = indexService.index(dataDir);
+//			long end = new Date().getTime();
+//			String text = "Indexing " + numIndexed + " files took "
+//					+ (end - start) + " milliseconds";
+//			return new ResponseEntity<String>(text, HttpStatus.OK);
+//		}
 		
 		private File getResourceFilePath(String path) {
 		    URL url = this.getClass().getClassLoader().getResource(path);
@@ -121,7 +112,8 @@ public class IndexerController {
 					application.setLastname(model.getLastname());
 					application.setEducation(model.getEducation());
 					application.setCity(model.getCity());
-					application.setTimestamp(new Date());
+					application.setTimestamp(LocalDateTime.now().getHourOfDay());
+					System.out.println(LocalDateTime.now().getHourOfDay());
 					application.setLocation(getLocation(model.getCity(), model.getCountry()));
 					indexApplicationService.save(application);
 	            }

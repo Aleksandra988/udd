@@ -15,6 +15,7 @@ public class ResultDataApplication {
     private String lastName;
     private String education;
     private String filename;
-    private String location;
+    private String city;
+    //private String location;
     private String highlight;
 }

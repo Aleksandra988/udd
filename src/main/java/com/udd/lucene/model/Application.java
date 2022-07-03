@@ -36,8 +36,8 @@ public class Application {
     @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String city;
 
-    @Field(type = FieldType.Date, store = true)
-    private Date timestamp;
+    @Field(type = FieldType.Integer, store = true)
+    private int timestamp;
 
     @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String filename;
