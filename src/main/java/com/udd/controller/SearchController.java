@@ -26,10 +26,6 @@ public class SearchController {
 		
 		@PostMapping(value="/search/boolean", consumes="application/json")
 		public ResponseEntity<List<ResultDataApplication>> searchBoolean(@RequestBody AdvancedQueryApplication advancedQuery) throws Exception {
-			if(advancedQuery.getEducationValue().equals("opsta"))
-				System.out.println("Istoooooooooooooooooooooooooooooooooo");
-			else
-				System.out.println("neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 			if(isFieldsEmpty(advancedQuery))
 				return new ResponseEntity<List<ResultDataApplication>>((List<ResultDataApplication>) null, HttpStatus.OK);
 			SimpleQuery simpleQuery = isQuerySimple(advancedQuery);
@@ -37,24 +33,13 @@ public class SearchController {
 
 				org.elasticsearch.index.query.QueryBuilder query= QueryBuilders.matchQuery(simpleQuery.getField(),
 						simpleQuery.getValue().toLowerCase(Locale.ROOT));
-				List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-				rh.add(new RequiredHighlight(simpleQuery.getField(), simpleQuery.getValue()));
-				List<ResultDataApplication> results = resultRetriever.getResultsApplication(query, rh);
+				List<ResultDataApplication> results = resultRetriever.getResultsApplication(query);
 				return new ResponseEntity<List<ResultDataApplication>>(results, HttpStatus.OK);
 			}else {
 
 				BoolQueryBuilder builder = buildQuery(advancedQuery);
 				List<RequiredHighlight> rh = new ArrayList<RequiredHighlight>();
-
-				if (advancedQuery.getFirstnameField() != "" && advancedQuery.getFirstnameValue() != "")
-					rh.add(new RequiredHighlight(advancedQuery.getFirstnameField(), advancedQuery.getFirstnameValue()));
-				if (advancedQuery.getLastnameField() != "" && advancedQuery.getLastnameValue() != "")
-					rh.add(new RequiredHighlight(advancedQuery.getLastnameField(), advancedQuery.getLastnameValue()));
-				if (advancedQuery.getEducationField() != "" && advancedQuery.getEducationValue() != "")
-					rh.add(new RequiredHighlight(advancedQuery.getEducationField(), advancedQuery.getEducationValue()));
-				if (advancedQuery.getContentField() != "" && advancedQuery.getContentValue() != "")
-					rh.add(new RequiredHighlight(advancedQuery.getContentField(), advancedQuery.getContentValue()));
-				List<ResultDataApplication> results = resultRetriever.getResultsApplication(builder, rh);
+				List<ResultDataApplication> results = resultRetriever.getResultsApplication(builder);
 
 				return new ResponseEntity<List<ResultDataApplication>>(results, HttpStatus.OK);
 			}
@@ -109,34 +94,6 @@ public class SearchController {
 				else if(advancedQuery.getContentOperation().equalsIgnoreCase("NOT"))
 					builder.mustNot(query4);
 			}
-//			if (advancedQuery.getOperation().equalsIgnoreCase("AND")) {
-//				if(query1 != null)
-//					builder.must(query1);
-//				if (query2 != null)
-//					builder.must(query2);
-//				if (query3 != null)
-//					builder.must(query3);
-//				if (query4 != null)
-//					builder.must(query4);
-//			} else if (advancedQuery.getOperation().equalsIgnoreCase("OR")) {
-//				if(query1 != null)
-//					builder.should(query1);
-//				if (query2 != null)
-//					builder.should(query2);
-//				if (query3 != null)
-//					builder.should(query3);
-//				if (query4 != null)
-//					builder.should(query4);
-//			} else if (advancedQuery.getOperation().equalsIgnoreCase("NOT")) {
-//				if(query1 != null)
-//					builder.must(query1);
-//				if (query2 != null)
-//					builder.mustNot(query2);
-//				if (query3 != null)
-//					builder.mustNot(query3);
-//				if (query4 != null)
-//					builder.mustNot(query4);
-//			}
 			return builder;
 		}
 

@@ -52,8 +52,7 @@ public class ResultRetriever {
 		this.template = template;
 	}
 
-	public List<ResultDataApplication> getResultsApplication(org.elasticsearch.index.query.QueryBuilder query,
-																				  List<RequiredHighlight> requiredHighlights) {
+	public List<ResultDataApplication> getResultsApplication(org.elasticsearch.index.query.QueryBuilder query) {
 		if (query == null) {
 			return null;
 		}
@@ -124,12 +123,6 @@ public class ResultRetriever {
 		for(SearchHit<Application> ap : searchHits) {
 			var unit = ap.getContent();
 			String highlight = createHighlight(ap);
-//			String highlight = "";
-//			if (ap.getHighlightFields().isEmpty()) {
-//				highlight = unit.getContent().substring(0, 150) + "...";
-//			} else {
-//				highlight = "..." + ap.getHighlightFields().get("content").get(0) + "...";
-//			}
 			Path p = Paths.get(unit.getFilename());
 			String filename = p.getFileName().toString();
 			ResultDataApplication searchResultDTO = new ResultDataApplication();
