@@ -148,7 +148,7 @@ public class SearchController {
 			if(isPhrase)
 				query = QueryBuilders.matchPhraseQuery(field, value);
 			else
-				query = QueryBuilder.buildQuery(SearchType.regular, field, value);
+				query = QueryBuilders.matchQuery(field, value);
 		}
 		return query;
 	}
