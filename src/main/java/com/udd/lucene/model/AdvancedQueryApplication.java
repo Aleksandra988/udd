@@ -13,17 +13,21 @@ public class AdvancedQueryApplication {
 
     private String firstnameField;
     private String firstnameValue;
+    private String firstnameOperation;
     private boolean firstnameIsPhrase;
     private String lastnameField;
     private String lastnameValue;
+    private String lastnameOperation;
     private boolean lastnameIsPhrase;
     private String educationField;
     private String educationValue;
+    private String educationOperation;
     private boolean educationIsPhrase;
     private String contentField;
     private String contentValue;
+    private String contentOperation;
     private boolean contentIsPhrase;
-    private String operation;
+//    private String operation;
 
     public boolean getFirstnameIsPhrase() {
         return firstnameIsPhrase;

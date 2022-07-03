@@ -21,7 +21,13 @@
 				<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
 					<input type="text" name="firstname" placeholder="firstname"/><br/><br/>
 					<input type="text" name="lastname" placeholder="lastname"/><br/><br/>
-					<input type="text" name="education" placeholder="education"/><br/><br/>
+<!--					<input type="text" name="education" placeholder="education"/><br/><br/>-->
+					<select name="education" id="education">
+						<option value="opsta">opsta</option>
+						<option value="strucna">strucna</option>
+						<option value="akademska">akademska</option>
+						<option value="strukovna">strukovna</option>
+					</select><br/><br/>
 					<input type="text" name="city" placeholder="city"/><br/><br/>
 					<input type="text" name="country" placeholder="country"/><br/><br/>
 				<input type="file" name="files"/><br/><br/>
@@ -41,23 +47,49 @@
 					<input type="text" name="firstnameValue" placeholder="firstnameValue" />
 					<input type="checkbox" id="checkboxfirstname" name="checkboxfirstname">
 					<label for="checkboxfirstname">isPhrase</label><br/><br/>
-					<input STYLE="background-color: #D3D3D3;" type="text" name="lastnameField" placeholder="lastnameField" value="lastname" readonly/><br/><br/>
-					<input type="text" name="lastnameValue" placeholder="lastnameValue" />
-					<input type="checkbox" id="checkboxlastname" name="checkboxlastname">
-					<label for="checkboxlastname">isPhrase</label><br/><br/>
-					<input STYLE="background-color: #D3D3D3;" type="text" name="educationField" placeholder="educationField" value="education" readonly/><br/><br/>
-					<input type="text" name="educationValue" placeholder="educationValue" />
-					<input type="checkbox" id="checkboxeducation" name="checkboxeducation">
-					<label for="checkboxeducation">isPhrase</label><br/><br/>
-					<input STYLE="background-color: #D3D3D3;" type="text" name="contentField" placeholder="contentField" value="content" readonly/><br/><br/>
-					<input type="text" name="contentValue" placeholder="contentValue" />
-					<input type="checkbox" id="checkboxcontent" name="checkboxcontent">
-					<label for="checkboxcontent">isPhrase</label><br/><br/>
-					<select name="operation" id="operation">
+					<select name="firstnameOperation" id="firstnameOperation">
 						<option value="AND">AND</option>
 						<option value="OR">OR</option>
 						<option value="NOT">NOT</option>
 					</select><br/><br/>
+					<input STYLE="background-color: #D3D3D3;" type="text" name="lastnameField" placeholder="lastnameField" value="lastname" readonly/><br/><br/>
+					<input type="text" name="lastnameValue" placeholder="lastnameValue" />
+					<input type="checkbox" id="checkboxlastname" name="checkboxlastname">
+					<label for="checkboxlastname">isPhrase</label><br/><br/>
+					<select name="lastnameOperation" id="lastnameOperation">
+						<option value="AND">AND</option>
+						<option value="OR">OR</option>
+						<option value="NOT">NOT</option>
+					</select><br/><br/>
+					<input STYLE="background-color: #D3D3D3;" type="text" name="educationField" placeholder="educationField" value="education" readonly/><br/><br/>
+					<input type="text" name="educationValue" placeholder="educationValue" />
+<!--					<select name="educationn" id="educationn">-->
+<!--						<option value="opsta">opsta</option>-->
+<!--						<option value="strucna">strucna</option>-->
+<!--						<option value="akademska">akademska</option>-->
+<!--						<option value="strukovna">strukovna</option>-->
+<!--					</select><br/><br/>-->
+					<input type="checkbox" id="checkboxeducation" name="checkboxeducation">
+					<label for="checkboxeducation">isPhrase</label><br/><br/>
+					<select name="educationOperation" id="educationOperation">
+						<option value="AND">AND</option>
+						<option value="OR">OR</option>
+						<option value="NOT">NOT</option>
+					</select><br/><br/>
+					<input STYLE="background-color: #D3D3D3;" type="text" name="contentField" placeholder="contentField" value="content" readonly/><br/><br/>
+					<input type="text" name="contentValue" placeholder="contentValue" />
+					<input type="checkbox" id="checkboxcontent" name="checkboxcontent">
+					<label for="checkboxcontent">isPhrase</label><br/><br/>
+					<select name="contentOperation" id="contentOperation">
+						<option value="AND">AND</option>
+						<option value="OR">OR</option>
+						<option value="NOT">NOT</option>
+					</select><br/><br/>
+<!--					<select name="operation" id="operation">-->
+<!--						<option value="AND">AND</option>-->
+<!--						<option value="OR">OR</option>-->
+<!--						<option value="NOT">NOT</option>-->
+<!--					</select><br/><br/>-->
 					<input class="button" type="submit" value="Submit" id="btnSubmitLuceneTermQuery"/>
 				</form>
 			</th>

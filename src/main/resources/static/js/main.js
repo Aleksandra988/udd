@@ -47,7 +47,7 @@ $(document).ready(function () {
 
                  $.ajax({
                                 type: "POST",
-                                url: "http://localhost:9200/index_application/_search",
+                                url: "http://localhost:9200/index_application_second/_search",
                                 headers:{
                                    'Content-Type': 'application/json'},
                                 data: JSON.stringify(data1),
@@ -61,13 +61,13 @@ $(document).ready(function () {
                     //                }
                 //                    console.log("SUCCESS : ", dataMaxCity);
                                       var maxCity = dataMaxCity.aggregations.citymax.buckets[0].key
-                                      console.log(dataMaxCity)
-                                    console.log(maxCity)
+//                                      console.log(dataMaxCity)
+//                                    console.log(maxCity)
                                     $('#result3').empty();
                                     var br = 1;
                                     for(index = 0; index < dataMaxCity.hits.hits.length; index++){
                                             var result = dataMaxCity.hits.hits[index]
-                                            console.log(result._source.firstname)
+//                                            console.log(result._source.firstname)
                                             $('#result3').append('<li>' + "Applicant " + br + '</li>');
                                             $('#result3').append('<li>' + "firstname" + ': ' + result._source.firstname + '</li>');
                                             $('#result3').append('<li>' + "lastname" + ': ' + result._source.lastname + '</li>');
@@ -90,6 +90,32 @@ $(document).ready(function () {
                                 }
                             });
 
+
+                            $.ajax({
+                                                            type: "GET",
+                                                            url: "http://localhost:8080/getAllEducation",
+                                                            success: function (allEducation) {
+                                                            console.log(allEducation)
+
+                                                            this_select_content = '';
+                                                            for(var i=0; i < allEducation.length; i++){
+                                                                var this_select_content = this_select_content + '<option value="' + allEducation[i].name + '">' + allEducation[i].name + '</option>';
+                                                            }
+                                                            $("#education").empty().append(this_select_content);
+//                                                            var myOptions = { val1 : allEducation[0].name,val2 : allEducation[1].name,
+//                                                                val3 : allEducation[2].name, val4 : allEducation[3].name};
+//                                                                $.each(myOptions, function(val, text) {
+//                                                                   $('#education').append(new Option(text, val));
+//                                                                });
+
+
+                                                            },
+                                                            error: function (e) {
+                                                                console.log("ERROR : ", e);
+
+                                                            }
+                                                        });
+
 });
 
 function uploadData() {
@@ -98,6 +124,9 @@ function uploadData() {
     var form = $('#fileUploadForm')[0];
 
     var data = new FormData(form);
+
+    console.log($('select[name=education]').val())
+
 
     $("#btnSubmit").prop("disabled", true);
 
@@ -138,15 +167,22 @@ function searchLuceneTermQuery() {
     var educationValue = $('#luceneTermQuery input[name=educationValue]').val();
     var contentField = $('#luceneTermQuery input[name=contentField]').val();
     var contentValue = $('#luceneTermQuery input[name=contentValue]').val();
-    var operation = $('select[name=operation]').val();
+//    var operation = $('select[name=operation]').val();
     var firstnameIsPhrase = $("#checkboxfirstname").is(':checked');
     var lastnameIsPhrase = $("#checkboxlastname").is(':checked');
     var educationIsPhrase = $("#checkboxeducation").is(':checked');
     var contentIsPhrase = $("#checkboxcontent").is(':checked')
+    var firstnameOperation = $('select[name=firstnameOperation]').val();
+    var lastnameOperation = $('select[name=lastnameOperation]').val();
+    var educationOperation = $('select[name=educationOperation]').val();
+    var contentOperation = $('select[name=contentOperation]').val();
+
+    console.log(educationValue)
 
     var data = JSON.stringify({"firstnameField":firstnameField, "firstnameValue":firstnameValue, "lastnameField":lastnameField, "lastnameValue":lastnameValue,
-    "educationField":educationField, "educationValue":educationValue, "contentField":contentField, "contentValue":contentValue, "operation": operation,
-    "firstnameIsPhrase":firstnameIsPhrase, "lastnameIsPhrase": lastnameIsPhrase, "educationIsPhrase":educationIsPhrase, "contentIsPhrase":contentIsPhrase});
+    "educationField":educationField, "educationValue":educationValue, "contentField":contentField, "contentValue":contentValue, /*"operation": operation,*/
+    "firstnameIsPhrase":firstnameIsPhrase, "lastnameIsPhrase": lastnameIsPhrase, "educationIsPhrase":educationIsPhrase, "contentIsPhrase":contentIsPhrase,
+    "firstnameOperation":firstnameOperation, "lastnameOperation":lastnameOperation, "educationOperation":educationOperation, "contentOperation":contentOperation});
    
     $("#btnSubmitLuceneTermQuery").prop("disabled", true);
 
@@ -246,7 +282,7 @@ function getStatistic(){
         $('#result2').empty();
         $.ajax({
                                     type: "POST",
-                                    url: "http://localhost:9200/index_application/_search",
+                                    url: "http://localhost:9200/index_application_second/_search",
                                     headers:{
                                        'Content-Type': 'application/json'},
                                     data: JSON.stringify(data2),
@@ -260,13 +296,13 @@ function getStatistic(){
                         //                    });
                         //                }
         //                                console.log("SUCCESS : ", dataMaxDate);
-                                        console.log(dataMaxDate.aggregations.timemax.buckets[0].key_as_string)
+//                                        console.log(dataMaxDate.aggregations.timemax.buckets[0].key_as_string)
                                         var parts = dataMaxDate.aggregations.timemax.buckets[0].key_as_string.split("T")
 
                                                             var time = parts[1].split(".")
 
                                         finalMaxDateTime = parts[0] + " " + time[0]
-                                        console.log(finalMaxDateTime)
+//                                        console.log(finalMaxDateTime)
                                         $('#result2').append('<li>' + "time" + ': ' + finalMaxDateTime + '</li>');
                         //                $("#btnSubmitGeo").prop("disabled", false);
 
@@ -282,7 +318,7 @@ function getStatistic(){
 
         $.ajax({
                 type: "POST",
-                url: "http://localhost:9200/index_application/_search",
+                url: "http://localhost:9200/index_application_second/_search",
                 headers:{
                    'Content-Type': 'application/json'},
                 data: JSON.stringify(data1),
@@ -297,8 +333,9 @@ function getStatistic(){
     //                }
 //                    console.log("SUCCESS : ", dataMaxCity);
                       var maxCity = dataMaxCity.aggregations.citymax.buckets[0].key
-                      console.log(dataMaxCity)
-                    console.log(maxCity)
+//                      console.log(dataMaxCity)
+//                    console.log(maxCity)
+                    console.log(dataMaxCity.aggregations.citymax.buckets[0])
 
                     $('#result2').append('<li>' + "city" + ': ' + maxCity + '</li>');
 

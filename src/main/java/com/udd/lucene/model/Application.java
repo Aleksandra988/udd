@@ -14,32 +14,32 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(indexName = "index_application")
+@Document(indexName = "index_application_second")
 public class Application {
 
     @Id
     @Field(type = FieldType.Keyword)
     private String id;
 
-    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian")
+    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String firstname;
 
-    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian")
+    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String lastname;
 
-    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian")
+    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String education;
 
-    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian")
+    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String content;
 
-    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian")
+    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String city;
 
     @Field(type = FieldType.Date, store = true)
     private Date timestamp;
 
-    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian")
+    @Field(type = FieldType.Text, fielddata = true, store = true, analyzer = "serbian", searchAnalyzer = "serbian")
     private String filename;
 
     @GeoPointField

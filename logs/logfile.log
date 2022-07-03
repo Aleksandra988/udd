@@ -1,0 +1,48 @@
+Starting TestApplication using Java 13.0.2 on DESKTOP-JIALDFV with PID 20116 (C:\Users\milijevic\Desktop\github udd\udd\target\classes started by milijevic in C:\Users\milijevic\Desktop\github udd\udd)
+No active profile set, falling back to default profiles: default
+Multiple Spring Data modules found, entering strict repository configuration mode!
+Bootstrapping Spring Data Elasticsearch repositories in DEFAULT mode.
+Finished Spring Data repository scanning in 5 ms. Found 0 Elasticsearch repository interfaces.
+Multiple Spring Data modules found, entering strict repository configuration mode!
+Bootstrapping Spring Data Elasticsearch repositories in DEFAULT mode.
+Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.udd.repository.EducationRepository. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+Finished Spring Data repository scanning in 61 ms. Found 2 Elasticsearch repository interfaces.
+Multiple Spring Data modules found, entering strict repository configuration mode!
+Bootstrapping Spring Data Reactive Elasticsearch repositories in DEFAULT mode.
+Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.udd.repository.EducationRepository. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+Finished Spring Data repository scanning in 7 ms. Found 0 Reactive Elasticsearch repository interfaces.
+Multiple Spring Data modules found, entering strict repository configuration mode!
+Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.udd.repository.AplicationRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.udd.repository.BookRepository. If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository.
+Finished Spring Data repository scanning in 12 ms. Found 1 JPA repository interfaces.
+Tomcat initialized with port(s): 8080 (http)
+Initializing ProtocolHandler ["http-nio-8080"]
+Starting service [Tomcat]
+Starting Servlet engine: [Apache Tomcat/9.0.55]
+Initializing Spring embedded WebApplicationContext
+Root WebApplicationContext: initialization completed in 1226 ms
+HHH000204: Processing PersistenceUnitInfo [name: default]
+HHH000412: Hibernate ORM core version 5.6.1.Final
+HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+HikariPool-1 - Starting...
+HikariPool-1 - Start completed.
+HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+Initialized JPA EntityManagerFactory for persistence unit 'default'
+spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+Adding welcome page: class path resource [static/index.html]
+Starting ProtocolHandler ["http-nio-8080"]
+Tomcat started on port(s): 8080 (http) with context path ''
+Started TestApplication in 3.91 seconds (JVM running for 4.341)
+Initializing Spring DispatcherServlet 'dispatcherServlet'
+Initializing Servlet 'dispatcherServlet'
+Completed initialization in 2 ms
+HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m23s728ms170µs400ns).
+Simple search - search hits
+Simple search - search hits
+Simple search - search hits
+Simple search - search hits
+Closing JPA EntityManagerFactory for persistence unit 'default'
+HikariPool-1 - Shutdown initiated...
+HikariPool-1 - Shutdown completed.

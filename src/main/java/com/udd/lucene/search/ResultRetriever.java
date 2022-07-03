@@ -27,6 +27,8 @@ import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
@@ -43,6 +45,7 @@ import static java.util.stream.Collectors.toList;
 public class ResultRetriever {
 	
 	private ElasticsearchRestTemplate template;
+	private Logger logger = LoggerFactory.getLogger(ResultRetriever.class);
 	
 	@Autowired
 	public ResultRetriever(ElasticsearchRestTemplate template){
@@ -63,7 +66,13 @@ public class ResultRetriever {
 				.withHighlightBuilder(highlightBuilder)
 				.build();
 
-		SearchHits<Application> applications = template.search(searchQuery, Application.class, IndexCoordinates.of("index_application"));
+		System.out.println("searchQuery: ");
+		System.out.println(searchQuery.getQuery());
+
+		SearchHits<Application> applications = template.search(searchQuery, Application.class, IndexCoordinates.of("index_application_second"));
+
+
+		logger.info("Simple search - search hits");
 
 		for (var ap : applications) {
 			var unit = ap.getContent();
@@ -73,7 +82,6 @@ public class ResultRetriever {
 			results.add(new ResultDataApplication(unit.getFirstname(), unit.getLastname(), unit.getEducation(), filename, unit.getLocation().toString(),
 					highlight));
 		}
-
 
 		return results;
 	}
@@ -107,8 +115,8 @@ public class ResultRetriever {
 		System.out.println("Geo search - query");
 
 
-		SearchHits<Application> searchHits =  this.template.search(searchQuery, Application.class, IndexCoordinates.of("index_application"));
-		//logger.info("Geo search - search hits");
+		SearchHits<Application> searchHits =  this.template.search(searchQuery, Application.class, IndexCoordinates.of("index_application_second"));
+		logger.info("Geo search - search hits");
 
 		List<ResultDataApplication> results = new ArrayList<>();
 
