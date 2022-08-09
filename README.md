@@ -3,7 +3,6 @@ Upravljanje digitalnim dokumentima elasticsearch
 
 Korisiti se Elasticsearch database za skladistenje indeksa.
 Kibana se korsti za pristup bazi Elasticsearch.
-U projektu se vrsi popunjvanje prijave za posao(popunjavaju se osnovna polja i upload-uje cv koji je u pdf formatu)i vrsi se indeksiranje.
 Funkcionalnosti:
 1. popunjvanje prijave za posao(popunjavaju se osnovna polja i upload-uje cv koji je u pdf formatu) i vrsi se indeksiranje
 2. simple search (indeksi mogu pretrazivati po svakom polju)
